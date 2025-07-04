@@ -1,3 +1,5 @@
+// these are called include guards, and they are essential in C++ header files.
+// This prevents multiple re-definitions of the class GenericRubiksCube.
 #ifndef RUBIKS_CUBE_SOLVER_RUBIKSCUBE_H
 #define RUBIKS_CUBE_SOLVER_RUBIKSCUBE_H
 
@@ -19,9 +21,11 @@ using namespace std;
  * We'll benchmark all models and observe which one is better for performance.
  */
 
+// Acts as an abstract base class for all cube representations (3D array, 1D array, bitboard).
 class RubiksCube
 {
 public:
+    // Using enum class avoids name clashes and makes your code more type-safe.
     enum class FACE
     {
         UP,
@@ -131,6 +135,10 @@ public:
      *             r2  .  .
      *
      */
+
+    // The const at the end means “this function will not modify the object’s state.”
+    // const before the return type means the return type is const.
+    // const after the parameter list means the function is a const member function.
     void print() const;
 
     /*
@@ -159,6 +167,7 @@ public:
      * B, B’, B2
      */
 
+    // This is the core polymorphic contract. Algorithms don’t care if it’s a bitboard or array — they just call move(F).
     virtual RubiksCube &f() = 0;
 
     virtual RubiksCube &fPrime() = 0;
@@ -195,6 +204,9 @@ public:
 
     virtual RubiksCube &b2() = 0;
 
+    // These are helper methods for advanced solvers.
+    // Used in pattern database heuristics: to encode corner permutation and orientation.
+    // Makes it possible to compute unique keys for the cube’s corner state.
     string getCornerColorString(uint8_t ind) const;
 
     uint8_t getCornerIndex(uint8_t ind) const;
@@ -202,4 +214,5 @@ public:
     uint8_t getCornerOrientation(uint8_t ind) const;
 };
 
+// Closes the include guard to avoid multiple definitions.
 #endif // RUBIKS_CUBE_SOLVER_RUBIKSCUBE_H

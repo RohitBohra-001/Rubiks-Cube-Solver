@@ -68,6 +68,8 @@ string RubiksCube::getMove(MOVE ind) {
 /*
  * Perform a move operation on using a Move index.
  */
+// move dispatcher - Dispatches a MOVE to the appropriate pure virtual method:
+// MOVE::L → calls l()
 RubiksCube &RubiksCube::move(MOVE ind) {
     switch (ind) {
         case MOVE::L:
@@ -201,6 +203,7 @@ void RubiksCube::print() const {
     cout << "\n";
 }
 
+// static_cast is a C++ type cast that converts a plain unsigned int to your MOVE enum class.
 vector<RubiksCube::MOVE> RubiksCube::randomShuffleCube(unsigned int times) {
     vector<MOVE> moves_performed;
     srand(time(0));
@@ -276,6 +279,8 @@ string RubiksCube::getCornerColorString(uint8_t ind) const {
     return str;
 }
 
+// This creates a unique index for the corner’s permutation.
+// Used in pattern databases for fast lookups.
 uint8_t RubiksCube::getCornerIndex(uint8_t ind) const {
     string corner = getCornerColorString(ind);
 
@@ -303,6 +308,7 @@ uint8_t RubiksCube::getCornerIndex(uint8_t ind) const {
     return ret;
 }
 
+// This is key for indexing corner orientation tables.
 uint8_t RubiksCube::getCornerOrientation(uint8_t ind) const {
     string corner = getCornerColorString(ind);
 

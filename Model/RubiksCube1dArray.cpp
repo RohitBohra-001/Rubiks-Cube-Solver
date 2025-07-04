@@ -1,5 +1,6 @@
 #include "RubiksCube.h"
 
+// inherits from abstract GenericRubiksCube → so it must implement all pure virtual methods like u(), l(), etc.
 class RubiksCube1dArray : public RubiksCube {
 private:
 

@@ -1,5 +1,6 @@
 #include "RubiksCube.h"
 
+// inherits from abstract GenericRubiksCube → so it must implement all pure virtual methods like u(), l(), etc.
 class RubiksCube3dArray : public RubiksCube {
 private:
 
@@ -249,6 +250,11 @@ public:
     }
 };
 
+// Hash3d functor (hash function object) - A functor is any struct/class that overloads operator().
+// So you can call it like a function to compute the hash.
+// The STL needs a hash function to generate a unique integer (hash code) for each cube state.
+// This is how it can compare cubes quickly and check for duplicates in constant time.
+// size_t is just an unsigned integer type used to represent the size of things:
 struct Hash3d {
     size_t operator()(const RubiksCube3dArray &r1) const {
         string str = "";
@@ -263,3 +269,5 @@ struct Hash3d {
     }
 
 };
+// hash<string>() is the standard C++ hash function for std::string.
+// It returns a size_t number — your unique cube hash code!
